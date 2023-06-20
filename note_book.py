@@ -1,15 +1,6 @@
-#Заметка должна содержать:
-# идентификатор, заголовок, тело заметки и дату/время создания или последнего изменения заметки. 
+import json
+import note
 import datetime
-class Note:
-    id=0
-    def __init__(self,id:int,name:str,date:datetime, comment:str):
-        #self.id=id
-        self.name=name #заголовок
-        self.date=date # дата создания
-        self.comment=comment #тело заметки
-    def __str__(self): #печать при использовании print(заметка)
-        return f'{self.id:<20} | {self.name:<20} | {self.date.strftime("%c"):<30} | {self.comment:<20}'    
 
 
 class NoteBook:
@@ -26,17 +17,27 @@ class NoteBook:
     
     def open(self):
         self.note_list=[]
-                                             
+        with open(self.path, "r") as file_json: # открытие файла note_list.json для чтения
+            data_line = json.load(file_json)# преобразование данных JSON в объекты Python (список) 
+        # print(data_line)
+        for item in data_line:
+            new_note=item.split(';')
+            self.note_list.append(note.Note( new_note[0], new_note[1], datetime.datetime.strptime(new_note[2], '%Y-%m-%d %H:%M:%S.%f'), new_note[3]))
+        # print(self.note_list)   
+                         
     def save(self):
         data=[]
-        with open(self.path,'w',encoding='UTF-8') as file:   
+        with open(self.path, 'w') as file_json:
             for note in self.note_list:
-                    line=f'{note.id};{note.name};{note.date};{note.comment}'
-                    data.append(line)
-                    text='\n'.join(data)
-            file.write(text)
+                line=f'{note.id};{note.name};{note.date};{note.comment}'
+                data.append(line)
+                # text='\n'.join(data)        
+            json.dump(data,file_json)
+                  
+            
+        
 
-    def add_note(self,new_id:int,new_name:str,new_date,new_comment:str):
-        Note.id+=Note.id
-        self.note_list.append(Note(new_id,new_name,new_date,new_comment)) 
-   
+    # def add_note(self,new_id:int,new_name:str,new_date,new_comment:str):
+    #     self.note_list.append(Note(new_id,new_name,new_date,new_comment)) 
+    def add_note(self,new_note):
+        self.note_list.append(new_note) 

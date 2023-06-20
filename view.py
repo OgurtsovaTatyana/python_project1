@@ -10,7 +10,7 @@ def main_menu() ->int:
         else:
             print(f'Введите Число от 1 до {length_menu}')
 
-def show_message(message:str):
+def show_message_line(message:str):
     print('-'*len(message))
     print(message)
     print('-'*len(message))
