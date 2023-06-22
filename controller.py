@@ -1,7 +1,7 @@
 import note_book
 import note
 import view
-import datetime
+from datetime import datetime, date
 my_book=note_book.NoteBook('note_list.json') #создаю экземпляр записной книжки
 # print(my_book.note_list)
 my_book.open()
@@ -25,7 +25,8 @@ def start():
             print(my_book)
             
         elif choice ==3:  #     . Найти запись по дате
-            search_date=datetime(input('Введите дату, для поиска'))
+            date_string=input(f'Введите дату, для поиска в формате: [ year-month-day] ')           
+            search_date = datetime.strptime(date_string,'%Y-%m-%d')
             my_book.search_note(search_date)
        
         elif choice==4: #     4. Изменить запись

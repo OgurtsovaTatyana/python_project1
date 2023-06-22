@@ -1,6 +1,8 @@
 import json
 import note
-import datetime
+from datetime import datetime,date
+
+
 
 
 class NoteBook:
@@ -22,20 +24,23 @@ class NoteBook:
         index_id=1
         for item in data_line:
             new_note=item.split(';')
-            self.note_list.append(note.Note( index_id, new_note[1], datetime.datetime.strptime(new_note[2], '%Y-%m-%d %H:%M:%S.%f'), new_note[3]))
+            self.note_list.append(note.Note( index_id, new_note[1], datetime.strptime(new_note[2], '%Y-%m-%d %H:%M:%S.%f'), new_note[3]))
             index_id+=1
         note.Note.count_id=index_id
         
     def search_note(self,search_date:datetime):
-        for note in self.note_list:
-            if note.date==search_date:
-                print(note)  
-            else:
-                print("Такой записи нет в книге") 
+        search=True
+        print(f'Записи от :{search_date.date()}')
+        for item in self.note_list: 
+            if item.date.date()==search_date.date():
+                print(item) 
+                search=False         
+        if search:
+            print("не найдены") 
                 
                  
                          
-    def add_note(self,new_note):
+    def add_note(self,new_note: note.Note):
         self.note_list.append(new_note) 
         note.Note.count_id+=1
         print("Запись успешно добавлена") 
