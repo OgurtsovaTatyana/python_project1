@@ -10,4 +10,13 @@ class Note:
         self.comment=comment #тело заметки
         
     def __str__(self): #печать при использовании print(заметка)
-        return f'{self.id:<20} | {self.name:<20} | {self.date.strftime("%c"):<30} | {self.comment:<20}'    
+        return f'{self.id:<10} | {self.name[:30]:<30} | {self.date.strftime("%d-%b-%Y"):<30} | {self.comment[:10]:<10}...'   
+    
+    def full_print(self): 
+        return f''' 
+            Запись #{self.id} 
+            Заголовок: {self.name:}
+            Дата создания/редактирования:{self.date.strftime("%c"):<30}
+            Тело заметки:
+            {self.comment}
+            '''  

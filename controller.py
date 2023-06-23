@@ -3,49 +3,61 @@ import note
 import view
 from datetime import datetime, date
 my_book=note_book.NoteBook('note_list.json') #создаю экземпляр записной книжки
-# print(my_book.note_list)
+
 my_book.open()
 
 def start():
-    while True:
-        
+    while True:          
         choice=view.main_menu()
-        if choice==1: #     1. Добавить запись
-             
+        # Добавить запись
+        if choice==1:              
             new_id=note.Note.count_id
             new_name=input('Введите заголовок ')
             new_comment=input('Введите тело заметки ')
-            new_date=datetime.datetime.now()
+            new_date=datetime.now()
             my_book.add_note(note.Note(new_id,new_name,new_date,new_comment))
-            
-        elif choice==2: # показать все записи
-            print('\n Записная книжка: ')
-            mess="{:20}".format("id") + " | " + "{:20}".format("Заголовок") + " | " + "{:30}".format("дата") + " | " + "{:20}".format("тело заметки")  
-            view.show_message_line(mess)
-            print(my_book)
-            
-        elif choice ==3:  #     . Найти запись по дате
-            date_string=input(f'Введите дату, для поиска в формате: [ year-month-day] ')           
-            search_date = datetime.strptime(date_string,'%Y-%m-%d')
-            my_book.search_note(search_date)
-       
-        elif choice==4: #     4. Изменить запись
-            index_id=int(input('Введите номер записи, которую хотите изменить'))
-            print(f' запись № {index_id} открыта для редактирования:')
-            print (my_book.note_list[index_id-1])
-            new_name=input('Измените заголовк или пропустите пункт, чтоб оставить без изменений ')
-            new_comment=input('Измените содержимое заметки или пропустите пункт, чтоб оставить без изменений ')
-            new_date=datetime.datetime.now()
-            my_book.change_note(index_id-1,new_name,new_date,new_comment)     
-           
-            
-        elif choice ==5: #     5. Удалить запись
-            index_id=int(input('Введите номер записи, которую хотите удалить '))
-            my_book.del_note(index_id-1)  
-                  
-        elif choice==6: #     6. Сохранить файл
+        # показать все записи    
+        elif choice==2: 
+            print('\n Записная книжка: ')            
+            view.show_message_line(my_book.show_title())
+            print(my_book) 
+            while True: 
+                submenu_choice=view.submenu_menu()
+                #  показать запись
+                if submenu_choice==1: 
+                    index_id=int(input('Введите номер записи, которую хотите открыть'))
+                    my_book.full_note(index_id)
+                # Найти запись по дате    
+                elif submenu_choice==2: 
+                    date_string=input(f'Введите дату, для поиска в формате: [ year-month-day] ')           
+                    search_date = datetime.strptime(date_string,'%Y-%m-%d')
+                    my_book.search_note(search_date)
+                    
+                # Изменить запись    
+                elif submenu_choice==3: 
+                    index_id=int(input('Введите номер записи, которую хотите изменить'))
+                    print(f' запись № {index_id} открыта для редактирования:')
+                    print (my_book.note_list[index_id-1])
+                    new_name=input('Измените заголовк или пропустите пункт, чтоб оставить без изменений ')
+                    new_comment=input('Измените содержимое заметки или пропустите пункт, чтоб оставить без изменений ')
+                    new_date=datetime.now()
+                    my_book.change_note(index_id-1,new_name,new_date,new_comment) 
+                    print("Запись отредактирована: ")  
+                    print(my_book.note_list[index_id-1])
+                # удалить запись    
+                elif submenu_choice==4:  
+                    index_id=int(input('Введите номер записи, которую хотите удалить '))
+                    if my_book.del_note(index_id-1):
+                        print("Запись успешно удалена")
+                    else:
+                        print("такого элемента нет в списке") 
+                 #     Выход         
+                elif submenu_choice==5:   
+                    break 
+        #Сохранить файл           
+        elif choice==3: 
             my_book.save()
             print('Файл сохранен') 
-
-        elif choice==7: #     7.  Выход
+        #Выход    
+        elif choice==4: 
             return  
