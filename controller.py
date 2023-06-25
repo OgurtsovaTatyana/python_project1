@@ -56,8 +56,7 @@ def start():
                     break 
         #Сохранить файл           
         elif choice==3: 
-            my_book.save()
-            print('Файл сохранен') 
+            my_book.save()            
         #Выход    
         elif choice==4: 
             return  

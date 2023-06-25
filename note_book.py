@@ -81,7 +81,7 @@ class NoteBook:
                 line=f'{note.id};{note.name};{note.date};{note.comment}'
                 data.append(line)                   
             json.dump(data,file_json)
-        print("записная книга сохранена")
+        print("Записная книга сохранена")
         
             
     def full_note(self,index_id:int):
