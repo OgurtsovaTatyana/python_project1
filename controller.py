@@ -25,7 +25,7 @@ def start():
                 submenu_choice=view.submenu_menu()
                 #  показать запись
                 if submenu_choice==1: 
-                    index_id=int(input('Введите номер записи, которую хотите открыть'))
+                    index_id=int(input('Введите ID записи, которую хотите открыть: '))
                     my_book.full_note(index_id)
                 # Найти запись по дате    
                 elif submenu_choice==2: 
@@ -35,22 +35,22 @@ def start():
                     
                 # Изменить запись    
                 elif submenu_choice==3: 
-                    index_id=int(input('Введите номер записи, которую хотите изменить'))
-                    print(f' запись № {index_id} открыта для редактирования:')
-                    print (my_book.note_list[index_id-1])
+                    index_id=int(input('Введите номер записи, которую хотите изменить: '))
+                    print(f' Запись № {index_id} открыта для редактирования ')
+                    my_book.full_note(index_id)
                     new_name=input('Измените заголовк или пропустите пункт, чтоб оставить без изменений ')
                     new_comment=input('Измените содержимое заметки или пропустите пункт, чтоб оставить без изменений ')
                     new_date=datetime.now()
-                    my_book.change_note(index_id-1,new_name,new_date,new_comment) 
-                    print("Запись отредактирована: ")  
-                    print(my_book.note_list[index_id-1])
+                    my_book.change_note(index_id,new_name,new_date,new_comment) 
+                    print("Запись успешно отредактирована")  
+                    
                 # удалить запись    
                 elif submenu_choice==4:  
-                    index_id=int(input('Введите номер записи, которую хотите удалить '))
-                    if my_book.del_note(index_id-1):
+                    index_id=int(input('Введите номер записи, которую хотите удалить: '))
+                    if my_book.del_note(index_id):
                         print("Запись успешно удалена")
                     else:
-                        print("такого элемента нет в списке") 
+                        print("Такого элемента нет в списке") 
                  #     Выход         
                 elif submenu_choice==5:   
                     break 

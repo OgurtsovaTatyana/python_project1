@@ -2,7 +2,7 @@
 # идентификатор, заголовок, тело заметки и дату/время создания или последнего изменения заметки. 
 import datetime
 class Note:
-    count_id=0
+    count_id=1000
     def __init__(self,id:int, name:str,date:datetime, comment:str):
         self.id=id # идентификатор
         self.name=name #заголовок
